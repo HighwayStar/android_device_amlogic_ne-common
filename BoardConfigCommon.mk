@@ -34,32 +34,47 @@ TARGET_AMLOGIC_GPU_ARCH ?= bifrost
 DEVICE_MANIFEST_FILE += $(COMMON_PATH)/manifest.xml
 
 ## Kernel
-BOARD_KERNEL_CMDLINE := androidboot.dynamic_partitions=true androidboot.boot_devices=soc/fe08c000.mmc use_uvm=1
-TARGET_KERNEL_SOURCE := kernel/amlogic/linux-5.4
-TARGET_KERNEL_CLANG_VERSION := r416183b
-TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/kernel/$(HOST_PREBUILT_TAG)/clang-$(TARGET_KERNEL_CLANG_VERSION)
+#BOARD_KERNEL_CMDLINE := androidboot.dynamic_partitions=true androidboot.boot_devices=soc/fe08c000.mmc use_uvm=1
+BOARD_KERNEL_CMDLINE := bootconfig
+#TARGET_KERNEL_SOURCE := kernel/amlogic/linux-5.4
+#TARGET_KERNEL_CLANG_VERSION := r416183b
+#TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/kernel/$(HOST_PREBUILT_TAG)/clang-$(TARGET_KERNEL_CLANG_VERSION)
 #TARGET_KERNEL_LLVM_BINUTILS := false
 ifeq ($(WITH_CONSOLE),true)
 BOARD_KERNEL_CMDLINE += console=ttyS0,921600 no_console_suspend ignore_loglevel
 endif
 
 ## Kernel modules
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/amlogic/kernel-modules
-TARGET_KERNEL_EXT_MODULES += \
-    mali-driver/bifrost \
-    media-5.4
+#TARGET_KERNEL_EXT_MODULE_ROOT := kernel/amlogic/kernel-modules
+#TARGET_KERNEL_EXT_MODULES += \
+#    mali-driver/bifrost \
+#    media-5.4
 
-TARGET_KERNEL_EXT_MODULES += \
-    optee
+#TARGET_KERNEL_EXT_MODULES += \
+#    optee
 
-TARGET_MODULE_ALIASES += \
-    mali_kbase.ko:mali.ko
+#TARGET_MODULE_ALIASES += \
+#    mali_kbase.ko:mali.ko
+
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
+BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
+BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)
+
+TARGET_NO_KERNEL_OVERRIDE := true
+PRODUCT_COPY_FILES += \
+    $(KERNEL_PATH)/gki/Image.lz4:kernel
 
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(COMMON_PATH)/modules.blocklist
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_dlkm.modules.load))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_recovery.modules.load))
 BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
-BOARD_GENERIC_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
+BOARD_GENERIC_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat  $(KERNEL_PATH)/vendor_boot.modules.load))
+
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/ramdisk/lib/modules/,$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules)
+
+#    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/vendor_dlkm/,$(TARGET_COPY_OUT_VENDOR_DLKM)/lib/modules) \
+#    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/system_dlkm/,$(TARGET_COPY_OUT_SYSTEM_DLKM)/lib/modules/6.1.25-android14-11-g9f6af9a6c2cc-ab11205628)
 
 ## Partitions
 SSI_PARTITIONS := product system system_ext
@@ -81,8 +96,8 @@ TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/init-files/fstab.amlogic
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 TARGET_NO_RECOVERY := true
-BOARD_USES_RECOVERY_AS_BOOT := true
-
+#BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT:=true
 ## Vendor SPL
 VENDOR_SECURITY_PATCH := 2023-03-01
 
