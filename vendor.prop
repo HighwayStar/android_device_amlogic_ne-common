@@ -42,6 +42,37 @@ ro.surface_flinger.supports_background_blur=1
 ro.surface_flinger.vsync_event_phase_offset_ns=2000000
 ro.surface_flinger.vsync_sf_event_phase_offset_ns=4000000
 
+# ARM Mali Gralloc Usage Configs
+ro.vendor.arm.gralloc.no_afbc_usage_flags=0x20000000
+ro.vendor.arm.gralloc.no_afbc_usage_mask=0x60000000
+ro.vendor.arm.gralloc.force_back_buffer_usage_flags=0x40000000000000
+ro.vendor.arm.gralloc.force_back_buffer_usage_mask=0x40000000000000
+ro.vendor.arm.gralloc.shared_access_usage_flags=0x10000000
+ro.vendor.arm.gralloc.shared_access_usage_mask=0x50000000
+ro.vendor.arm.gralloc.afrc_rgba_usage_flags=0x50000000,0x60000000,0x40000000
+ro.vendor.arm.gralloc.afrc_rgba_usage_mask=0x70000000
+ro.vendor.arm.gralloc.afrc_luma_usage_flags=0x50000000,0x60000000,0x40000000
+ro.vendor.arm.gralloc.afrc_luma_usage_mask=0x70000000
+ro.vendor.arm.gralloc.afrc_chroma_usage_flags=0x100000000000000,0x80000000000000,0x180000000000000
+ro.vendor.arm.gralloc.afrc_chroma_usage_mask=0x180000000000000
+
+# EGL configs for Mali (Fixes SurfaceFlinger color formats)
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.hal_format=0x1
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.recordable=true
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.framebuffer_target=true
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_32bit_fixed.hal_format=0x2
+ro.vendor.arm.egl.configs.r5_g6_b5_a0_16bit_fixed.hal_format=0x4
+ro.vendor.arm.egl.configs.r5_g6_b5_a0_16bit_fixed.framebuffer_target=true
+ro.vendor.arm.egl.configs.nv12.hal_format=0x100
+ro.vendor.arm.egl.configs.nv12.recordable=true
+ro.vendor.arm.egl.configs.nv21.hal_format=0x101
+ro.vendor.arm.egl.configs.nv21.recordable=true
+ro.vendor.arm.egl.configs.yuv420.hal_format=0x108
+
+# Hardware Composer Overrides
+ro.vendor.hwc.default.config=true
+vendor.hwc.di_channel_number=2
+
 ## HDMI
 ro.vendor.platform.earlysuspend=false
 ro.vendor.platform.has.realoutputmode=true
@@ -54,6 +85,19 @@ ro.hwui.layer_cache_size=33.75f
 
 ## Logging
 log.tag.HDMI=DEBUG
+
+
+# Modern Android 14 Codec2 Properties
+vendor.media.codec2.support=true
+vendor.media.codec2.disable_secure=false
+debug.stagefright.c2-poolmask=458752
+debug.c2.use_dmabufheaps=1  # <-- This is HUGE for bypassing ION
+debug.stagefright.c2inputsurface=-1
+debug.vendor.media.c2.vdec.support_10bit=false
+vendor.media.c2.vdec.enable_h264_4k_mmu=true
+vendor.media.mediahal.videodec.media.c2_secure_prealloc=true
+vendor.media.mediahal.tsplayer.vtbuffer_number_limit=1
+vendor.media.mediahal.videodec.afr.policy=0
 
 ## Media
 persist.sys.media.avsync=true
@@ -68,25 +112,12 @@ vendor.afbcd.enable=1
 ro.vendor.screencontrol.maxbufsize=104857600
 
 ## OMX
-ro.vendor.media.support.omx2=true
-vendor.media.omx2.in_buffer=5
-vendor.media.omx.use.360omx2=false
-vendor.media.omx.out_buffer2_osd=8
-vendor.media.omx.display_mode=3
-vendor.media.sf.omxvideo-optmize=1
+
 vendor.media.support.mvc=true
 
 ## OMX ne
 vendor.tv.dtv.tf.disable=false
 vendor.media.audio.syncshow=1
-vendor.media.omx2.support_mpeg=true
-vendor.media.omx.dibypass.enable=false
-vendor.media.omx.videolayerrotation.enable=false
-vendor.omx2.nr.enable=true
-vendor.omx2.di.localbuf.enable=true
-vendor.media.omx.secure.prealloc=true
-vendor.media.omx.use_dv_frame=true
-vendor.media.omx2.support_passthrough=true
 ro.vendor.platform.is.dualspdif=true
 ro.vendor.platform.support.av1=true
 
