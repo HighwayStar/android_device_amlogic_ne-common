@@ -7,12 +7,14 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
 # Set kernel version for use in inherited makefiles
-TARGET_KERNEL_VERSION := 5.4
+TARGET_KERNEL_VERSION := 5.15
 PRODUCT_ENABLE_UFFD_GC := false
 
 # Atrace
+ifneq ($(TARGET_KERNEL_VERSION),5.15)
 PRODUCT_PACKAGES += \
     android.hardware.atrace@1.0-service
+endif
 
 ## Attestation
 PRODUCT_COPY_FILES +=  \
@@ -28,20 +30,34 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml
 
+
+# Audio HAL Interfaces and Wrappers (No generic audio.service!)
 PRODUCT_PACKAGES += \
-    android.hardware.audio@6.0-impl \
     android.hardware.audio@7.0.vendor \
     android.hardware.audio@7.0-util.vendor \
+    android.hardware.audio@7.0-impl \
     android.hardware.audio.common@7.0-util \
-    android.hardware.audio.effect@6.0-impl \
     android.hardware.audio.effect@7.0-util.vendor \
+    android.hardware.audio.effect@7.0-impl \
     av-types-aidl-cpp.vendor \
     libaudiofoundation.vendor \
-    libaudioroute.vendor
+    libaudioroute.vendor \
+    android.media.audio.common.types-V2-cpp.vendor
 
 ## Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0.vendor
+    android.hardware.bluetooth@1.1.vendor \
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth.audio-impl
+
+## Codec 2
+
+PRODUCT_PACKAGES += \
+    libcodec2_hidl@1.2.vendor \
+    libcodec2_simple_component \
+    libcodec2_vndk.vendor \
+    libavservices_minijail.vendor \
+    libstagefright_xmlparser.vendor
 
 ## Camera
 PRODUCT_PACKAGES += \
@@ -63,6 +79,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
 ## Codecs
+## Codecs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/media_codecs_amlogic_audio_ddp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_amlogic_audio_ddp.xml \
     $(LOCAL_PATH)/media/media_codecs_amlogic_audio_dtshd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_amlogic_audio_dtshd.xml \
@@ -80,12 +97,13 @@ PRODUCT_COPY_FILES += \
 
 ## Dumpstate
 PRODUCT_PACKAGES += \
-    android.hardware.dumpstate@1.1.vendor \
+    android.hardware.dumpstate-V1-ndk.vendor \
     libdumpstateutil.vendor
 
 ## Graphics
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.4.vendor \
+    android.hardware.graphics.common-V4-ndk.vendor \
     libdmabufheap.vendor \
     libion.vendor \
     libutilscallstack.vendor
@@ -103,6 +121,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mesondisplay.cfg:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/mesondisplay.cfg \
     $(LOCAL_PATH)/configs/mesondisplay.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/mesondisplay.cfg
 
+# Health
+
+PRODUCT_PACKAGES += \
+    android.hardware.health-V1-ndk.vendor
+
 # Init-Files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init-files/init.amlogic.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.amlogic.rc \
@@ -116,7 +139,22 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     fstab.amlogic
 
+# Gatekeeper
+
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper-V1-ndk.vendor \
+    libtrusty.vendor \
+    libgatekeeper.vendor
+
+# HDMI
+PRODUCT_PACKAGES += \
+    android.hardware.tv.hdmi.cec-V1-ndk.vendor \
+    android.hardware.tv.hdmi.connection-V1-ndk.vendor
+
 ## Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.security.keymint-service
+
 ifneq ($(TARGET_HAS_TEE),false)
 PRODUCT_PACKAGES += \
     android.hardware.security.keymint-V1-ndk_platform.vendor \
@@ -138,9 +176,9 @@ PRODUCT_PACKAGES += \
     android.hardware.light-V1-ndk_platform.vendor
 
 ## Media firmware
-PRODUCT_COPY_FILES += \
-    kernel/amlogic/kernel-modules/media-5.4/firmware/h264_enc.bin:$(TARGET_COPY_OUT_VENDOR)/lib/firmware/video/h264_enc.bin \
-    kernel/amlogic/kernel-modules/media-5.4/firmware/video_ucode.bin:$(TARGET_COPY_OUT_VENDOR)/lib/firmware/video/video_ucode.bin
+#PRODUCT_COPY_FILES += \
+#    kernel/amlogic/kernel-modules/media-5.4/firmware/h264_enc.bin:$(TARGET_COPY_OUT_VENDOR)/lib/firmware/video/h264_enc.bin \
+#    kernel/amlogic/kernel-modules/media-5.4/firmware/video_ucode.bin:$(TARGET_COPY_OUT_VENDOR)/lib/firmware/video/video_ucode.bin
 
 # Memtrack
 PRODUCT_PACKAGES += \
@@ -185,6 +223,7 @@ PRODUCT_PACKAGES += \
 ## Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0.vendor \
+    android.hardware.thermal-V1-ndk.vendor \
     libjsoncpp.vendor
 
 # Update engine
@@ -192,8 +231,9 @@ PRODUCT_PACKAGES += \
     update_engine \
     update_engine_sideload \
     update_verifier \
-    android.hardware.boot@1.2 \
-    android.hardware.boot@1.2.vendor
+    android.hardware.boot@1.1 \
+    android.hardware.boot@1.1.vendor \
+    android.hardware.boot-V1-ndk.vendor
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
@@ -203,7 +243,10 @@ PRODUCT_PACKAGES += \
 
 ## USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb.gadget@1.2.vendor
+    android.hardware.usb.gadget@1.2.vendor \
+    android.hardware.usb-V2-ndk.vendor \
+    android.hardware.usb.gadget-V1-ndk.vendor \
+    android.frameworks.stats-V1-ndk.vendor
 
 ## VNDK
 PRODUCT_PACKAGES += \
