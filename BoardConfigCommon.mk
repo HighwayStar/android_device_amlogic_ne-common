@@ -5,7 +5,7 @@
 #
 
 # Target kernel, must be set before inheriting common tree
-TARGET_KERNEL_VERSION := 5.4
+TARGET_KERNEL_VERSION := 5.15
 
 COMMON_PATH := device/amlogic/ne-common
 
@@ -21,7 +21,8 @@ AB_OTA_PARTITIONS += \
     system_ext \
     vbmeta \
     vbmeta_system \
-    vendor
+    vendor \
+    vendor_dlkm
 
 ## BUILD_BROKEN_*
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
@@ -40,9 +41,14 @@ BOARD_KERNEL_CMDLINE := bootconfig
 #TARGET_KERNEL_CLANG_VERSION := r416183b
 #TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/kernel/$(HOST_PREBUILT_TAG)/clang-$(TARGET_KERNEL_CLANG_VERSION)
 #TARGET_KERNEL_LLVM_BINUTILS := false
-ifeq ($(WITH_CONSOLE),true)
-BOARD_KERNEL_CMDLINE += console=ttyS0,921600 no_console_suspend ignore_loglevel
-endif
+#ifeq ($(WITH_CONSOLE),true)
+BOARD_KERNEL_CMDLINE += nokaslr earlycon=aml_uart,0xfe07a000 ignore_loglevel
+#endif
+
+BOARD_BOOTCONFIG += androidboot.dynamic_partitions=true
+BOARD_BOOTCONFIG += androidboot.dtbo_idx=0
+BOARD_BOOTCONFIG += androidboot.boot_devices=soc/fe08c000.mmc
+BOARD_BOOTCONFIG += use_uvm=1
 
 ## Kernel modules
 #TARGET_KERNEL_EXT_MODULE_ROOT := kernel/amlogic/kernel-modules
@@ -56,29 +62,20 @@ endif
 #TARGET_MODULE_ALIASES += \
 #    mali_kbase.ko:mali.ko
 
+
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
 BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)
+
 
 TARGET_NO_KERNEL_OVERRIDE := true
 PRODUCT_COPY_FILES += \
     $(KERNEL_PATH)/gki/Image.lz4:kernel
 
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(COMMON_PATH)/modules.blocklist
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_dlkm.modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_recovery.modules.load))
-BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
-BOARD_GENERIC_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat  $(KERNEL_PATH)/vendor_boot.modules.load))
-
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/ramdisk/lib/modules/,$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules)
-
-#    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/vendor_dlkm/,$(TARGET_COPY_OUT_VENDOR_DLKM)/lib/modules) \
-#    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/system_dlkm/,$(TARGET_COPY_OUT_SYSTEM_DLKM)/lib/modules/6.1.25-android14-11-g9f6af9a6c2cc-ab11205628)
 
 ## Partitions
 SSI_PARTITIONS := product system system_ext
-TREBLE_PARTITIONS := odm vendor
+TREBLE_PARTITIONS := odm vendor vendor_dlkm
 ALL_PARTITIONS := $(SSI_PARTITIONS) $(TREBLE_PARTITIONS)
 
 BOARD_AMLOGIC_DYNAMIC_PARTITIONS_PARTITION_LIST := $(ALL_PARTITIONS)
@@ -86,6 +83,18 @@ BOARD_AMLOGIC_DYNAMIC_PARTITIONS_SIZE := $(shell echo $$(($(BOARD_SUPER_PARTITIO
 BOARD_BUILD_SUPER_IMAGE_BY_DEFAULT := true
 BOARD_SUPER_PARTITION_GROUPS := amlogic_dynamic_partitions
 BUILDING_SUPER_EMPTY_IMAGE := true
+
+
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_boot.modules.load))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_recovery.modules.load))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/ramdisk/lib/modules/*.ko)
+
+
+BOARD_USES_VENDOR_DLKMIMAGE := true
+TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/lib/modules/*.ko)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_dlkm.modules.load))
+
 
 ## Properties
 TARGET_PRODUCT_PROP += $(COMMON_PATH)/product.prop
