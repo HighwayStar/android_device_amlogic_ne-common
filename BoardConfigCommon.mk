@@ -18,6 +18,7 @@ AB_OTA_PARTITIONS += \
     odm \
     product \
     system \
+    system_dlkm \
     system_ext \
     vbmeta \
     vbmeta_system \
@@ -74,7 +75,7 @@ PRODUCT_COPY_FILES += \
 
 
 ## Partitions
-SSI_PARTITIONS := product system system_ext
+SSI_PARTITIONS := product system system_ext system_dlkm
 TREBLE_PARTITIONS := odm vendor vendor_dlkm
 ALL_PARTITIONS := $(SSI_PARTITIONS) $(TREBLE_PARTITIONS)
 
@@ -89,6 +90,12 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/v
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_recovery.modules.load))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/ramdisk/lib/modules/*.ko)
 
+# 1. Enable system_dlkm
+BOARD_USES_SYSTEM_DLKMIMAGE := true
+TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
+BOARD_SYSTEM_KERNEL_MODULES := $(strip $(shell find $(SYSTEM_DLKM_SRC) -type f -name "*.ko"))
+BOARD_SYSTEM_KERNEL_MODULES :=  $(strip $(shell find $(KERNEL_PATH)/gki/lib/modules/ -type f -name "*.ko"))
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/gki/system_dlkm.modules.load))
 
 BOARD_USES_VENDOR_DLKMIMAGE := true
 TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
