@@ -1,7 +1,13 @@
 on fs
 
+chown bluetooth bluetooth /sys/module/amlogic_wireless/parameters/btpower_evt
+chmod 0666 /sys/module/amlogic_wireless/parameters/btpower_evt
+
 chown bluetooth bluetooth /sys/module/bt_device/parameters/btpower_evt
 chmod 0666 /sys/module/bt_device/parameters/btpower_evt
+
+chown bluetooth bluetooth /sys/module/amlogic_wireless/parameters/btwake_evt
+chmod 0666 /sys/module/amlogic_wireless/parameters/btwake_evt
 
 chown bluetooth bluetooth /sys/module/bt_device/parameters/btwake_evt
 chmod 0666 /sys/module/bt_device/parameters/btwake_evt
@@ -23,6 +29,12 @@ on property:vendor.wifi_name=bcm
 on property:vendor.wifi_name=rtl
    setprop wifi.direct.interface ap0
 
+on property:vendor.wifi_name=rtl8852bs
+   setprop wifi.direct.interface p2p0
+
+on property:vendor.wifi_name=rtl8852be
+   setprop wifi.direct.interface p2p0
+
 on property:vendor.wifi_name=mtk
    setprop wifi.direct.interface p2p0
 
@@ -31,6 +43,13 @@ on property:vendor.wifi_name=qca
 
 on property:vendor.wifi_name=aml
    setprop wifi.direct.interface ap0
+
+on property:vendor.wifi_name=nxp
+   setprop wifi.direct.interface p2p0
+
+on property:vendor.wifi_name=atbm603x
+   setprop wifi.direct.interface ap0
+   setprop ro.vendor.platform.wifi.suspend true
 
 on property:vendor.w1_wifi_type=ap
    write /sys/module/vlsicomm/parameters/con_mode 6
