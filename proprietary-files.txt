@@ -159,6 +159,8 @@ vendor/bin/DecInfo_test
 vendor/bin/esplayer
 
 ## Media
+vendor/lib/libmediahal_dmabufmanage.so
+vendor/lib/libmediahal_hardware_demux.so
 vendor/lib/libmediahal_mediasync.so
 vendor/lib/libmediahal_passthrough.so
 vendor/lib/libmediahal_resman.so

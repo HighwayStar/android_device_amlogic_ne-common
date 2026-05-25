@@ -54,10 +54,14 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libcodec2_hidl@1.2.vendor \
-    libcodec2_simple_component \
+    libcodec2_simple_component.vendor \
     libcodec2_vndk.vendor \
     libavservices_minijail.vendor \
-    libstagefright_xmlparser.vendor
+    libstagefright_xmlparser.vendor \
+    libsfplugin_ccodec_utils.vendor \
+    libstagefright_bufferpool@2.0.vendor \
+    libevent.vendor \
+    libchrome.vendor
 
 ## Camera
 PRODUCT_PACKAGES += \
