@@ -109,6 +109,7 @@ vendor/bin/hw/android.hardware.graphics.allocator-service
 vendor/etc/init/android.hardware.graphics.allocator-V2-service.rc
 vendor/lib/hw/android.hardware.graphics.allocator-V2-arm.so
 vendor/etc/mesondisplay.cfg
+vendor/etc/mali_platform.config
 vendor/lib/egl/libGLES_mali.so
 vendor/lib/hw/android.hardware.graphics.mapper@4.0-impl-arm.so
 vendor/lib/arm.graphics-V4-ndk.so
@@ -186,6 +187,7 @@ vendor/etc/remote.txt
 
 ## resmanload
 vendor/bin/resmanload
+vendor/etc/resman.json
 
 ## screen_source
 vendor/lib/hw/screen_source.amlogic.so
