@@ -5,11 +5,3 @@
 vendor/bin/hw/android.hardware.oemlock@1.0-service.droidlogic
 vendor/etc/init/android.hardware.oemlock@1.0-service.droidlogic.rc
 vendor/etc/vintf/manifest/android.hardware.oemlock@1.0-service.droidlogic.xml
-
-## Playready
-vendor/bin/hw/android.hardware.drm@1.4-service.playready
-vendor/etc/init/android.hardware.drm@1.4-service.playready.rc
-vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.4-service.playready.xml
-vendor/lib/libplayready.so
-vendor/lib/libplayreadymediadrmplugin.so
-

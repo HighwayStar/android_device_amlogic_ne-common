@@ -1,5 +1,5 @@
 ## All blobs from this list, unless pinned and noted as otherwise,
-## are from ohm_gtv-userdebug-12-SC-eng.bin.ya.20230223.173800-test-keys.
+## are from Amlogic/ohm/ohm:14/UKG3.250513.001/phh06150144:userdebug/test-keys
 
 ## Audio
 vendor/bin/hw/android.hardware.audio.service-droidlogic
@@ -22,6 +22,7 @@ vendor/lib/libmad.so
 vendor/lib/libms12api_v24.so
 vendor/lib/libnano.so
 vendor/lib/libsonic_ext.so
+vendor/lib/libamaudioutils_boot.so
 
 ## Audio
 vendor/lib/libamlaudiohal.7.0.so
@@ -50,11 +51,6 @@ vendor/etc/vintf/manifest/android.hardware.boot-service.droidlogic.xml
 
 ## Camera
 vendor/lib/hw/camera.amlogic.so
-vendor/lib/libispaaa.so
-vendor/lib/libjpegenc_api.so
-vendor/lib/libgdc.so
-vendor/lib/libdewarp.so
-vendor/lib/libispaml.so
 
 ## Common
 vendor/bin/ddrtest.sh
@@ -64,19 +60,19 @@ vendor/etc/lowmemorykiller_2G.txt
 vendor/etc/lowmemorykiller_512M.txt
 
 ## Composer
-vendor/bin/hw/android.hardware.graphics.composer@2.4-service.droidlogic
-vendor/etc/init/android.hardware.graphics.composer@2.4-service.droidlogic.rc
-vendor/etc/vintf/manifest/android.hardware.graphics.composer@2.4-service.droidlogic.xml
+vendor/bin/hw/android.hardware.graphics.composer@3.2-service.droidlogic
+vendor/etc/vintf/manifest/android.hardware.graphics.composer@3.2-service.droidlogic.xml
+vendor/etc/init/android.hardware.graphics.composer@3.2-service.droidlogic.rc
 vendor/lib/hw/hwcomposer.amlogic.so
-vendor/lib/android.hardware.graphics.composer@2.1-resources-vendor.so
-vendor/lib/android.hardware.graphics.composer@2.2-resources-vendor.so
 vendor/lib/libmeson_display_adapter_remote.so
 vendor/lib/libmeson_display_service.so
 vendor/lib/libvideotunnel.so
 vendor/lib/libmeson_mode_policy.so
 vendor/lib/vendor.amlogic.display.meson_display_ipc@1.0.so
-
-
+vendor/lib/vendor.amlogic.hardware.errormonitor@1.0.so
+vendor/lib/liberrormonitorclient.so
+vendor/lib/android.hardware.graphics.composer@2.1-resources-aidl.so
+vendor/lib/android.hardware.graphics.composer@2.2-resources-aidl.so
 
 ## Codec2 HAL
 vendor/bin/hw/android.hardware.media.c2@1.2-service
@@ -90,19 +86,22 @@ vendor/lib/libcodec2_aml_video_decoder.so
 vendor/lib/libcodec2_aml_video_encoder.so
 vendor/lib/libvendor_c2common.so
 vendor/lib/libvendor_c2componentstore.so
-vendor/lib/lib_amvenc.so
 vendor/lib/libge2d-2.0.so
 
 ## Droidlogic
 vendor/etc/permissions/droidlogic.software.core.xml
 vendor/etc/permissions/droidlogic.tv.software.core.xml
 vendor/framework/droidlogic.software.core.jar
-vendor/framework/droidlogic.tv.software.core.jar
+vendor/framework/droidlogic-tv.jar
 
 ## Dumpstate
 vendor/etc/init/dumpstate-default.droidlogic.rc
 vendor/bin/hw/android.hardware.dumpstate-service.droidlogic
 vendor/etc/vintf/manifest/dumpstate-default.droidlogic.xml
+
+## Kernel modules
+vendor_dlkm/lib/modules/amlogic_fbc_lib.ko
+
 
 ## Graphics
 vendor/bin/hw/android.hardware.graphics.allocator-service
@@ -148,8 +147,6 @@ vendor/etc/init/irblaster1.rc
 vendor/etc/init/power.rc
 vendor/etc/init/sysfs_permissions.rc
 
-## Kernel modules
-vendor_dlkm/lib/modules/amlogic_fbc_lib.ko
 
 ## Modules
 vendor/bin/modules_load
@@ -168,6 +165,9 @@ vendor/lib/libmediahal_resman.so
 vendor/lib/libmediahal_tsplayer.so
 vendor/lib/libmediahal_tunnelrenderer.so
 vendor/lib/libmediahal_videodec.so
+vendor/lib/libmediahal_mediametrics.so
+vendor/lib/libmediaproxy_producer.so
+vendor/lib/libmediaproxy_consumer.so
 
 # Memtrack
 vendor/bin/hw/android.hardware.memtrack-service.droidlogic
@@ -256,7 +256,6 @@ vendor/etc/init/tee_key_inject.rc
 ## TEE
 vendor/lib/teetz/2088528d-102a-4716-b940-23fd9be04adf.ta
 vendor/lib/teetz/526fc4fc-7ee6-4a12-96e3-83da9565bce8.ta
-vendor/lib/teetz/5f440c5c-87cc-4e97-9632-74e40a194a1f.ta
 vendor/lib/teetz/d83c3c4a-9e8d-4e4e-ad30-9d40e137f689.ta
 vendor/lib/teetz/e92a43ab-b4c8-4450-aa12-b1516259613b.ta
 vendor/lib/teetz/ff2a4bea-ef6d-11e6-89cc-d4ae52a7b3b3.ta
@@ -277,11 +276,6 @@ vendor/etc/vintf/manifest/android.hardware.usb.gadget-service.xml
 
 ## Vulkan
 vendor/lib/hw/vulkan.amlogic.so
-
-## Widevine
-vendor/bin/hw/android.hardware.drm-service.widevine
-vendor/etc/init/android.hardware.drm-service.widevine.rc
-vendor/etc/vintf/manifest/manifest_android.hardware.drm-service.widevine.xml
 
 ## Wi-Fi
 vendor/etc/wifi/p2p_supplicant.conf

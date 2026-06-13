@@ -42,7 +42,8 @@ PRODUCT_PACKAGES += \
     av-types-aidl-cpp.vendor \
     libaudiofoundation.vendor \
     libaudioroute.vendor \
-    android.media.audio.common.types-V2-cpp.vendor
+    android.media.audio.common.types-V2-cpp.vendor \
+    android.hardware.bluetooth.audio-V3-ndk.vendor
 
 ## Bluetooth
 PRODUCT_PACKAGES += \
@@ -106,7 +107,9 @@ PRODUCT_PACKAGES += \
 
 ## Graphics
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.4.vendor \
+    android.hardware.graphics.composer3-V2-ndk.vendor \
+    android.hardware.graphics.composer@2.1.vendor \
+    android.hardware.graphics.composer@2.2.vendor \
     android.hardware.graphics.common-V4-ndk.vendor \
     libdmabufheap.vendor \
     libion.vendor \
