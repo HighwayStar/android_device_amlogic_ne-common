@@ -253,13 +253,6 @@ vendor/bin/tee_provision
 vendor/etc/init/tee_hdcp.rc
 vendor/etc/init/tee_key_inject.rc
 
-## TEE
-vendor/lib/teetz/2088528d-102a-4716-b940-23fd9be04adf.ta
-vendor/lib/teetz/526fc4fc-7ee6-4a12-96e3-83da9565bce8.ta
-vendor/lib/teetz/d83c3c4a-9e8d-4e4e-ad30-9d40e137f689.ta
-vendor/lib/teetz/e92a43ab-b4c8-4450-aa12-b1516259613b.ta
-vendor/lib/teetz/ff2a4bea-ef6d-11e6-89cc-d4ae52a7b3b3.ta
-
 ## Thermal
 vendor/bin/hw/android.hardware.thermal-service.droidlogic
 vendor/etc/init/thermal.rc
