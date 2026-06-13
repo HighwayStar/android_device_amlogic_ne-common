@@ -98,6 +98,14 @@ vendor.media.c2.vdec.enable_h264_4k_mmu=true
 vendor.media.mediahal.videodec.media.c2_secure_prealloc=true
 vendor.media.mediahal.tsplayer.vtbuffer_number_limit=1
 vendor.media.mediahal.videodec.afr.policy=0
+vendor.media.c2.vdec.di.post=true
+vendor.media.mediahal.tsplayer.vvc_support=1
+vendor.media.mediahal.videodec.media.c2_prealloc_4k_segment0_size=240
+vendor.media.mediahal.videodec.media.c2_prealloc_segment0_size=146800640
+vendor.media.mediahal.videodec.media.c2_prealloc_segment1_size=73400320
+vendor.media.mediahal.videodec.media.c2_prealloc_segment2_size=33554432
+vendor.media.mediahal.videodec.media.c2_segment0_max_size=0
+vendor.media.multiaudio.decoder.support=1
 
 ## Media
 persist.sys.media.avsync=true
