@@ -1,8 +1,8 @@
 on early-init
     loglevel 3
 
-on init
-    insmod /vendor/lib/modules/mali.ko
+on post-fs-data
+    exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules mali
     insmod /oem/overlay/dovi.ko
 
 on early-fs
