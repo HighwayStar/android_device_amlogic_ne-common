@@ -176,10 +176,16 @@ vendor/etc/vintf/manifest/memtrack-amlogic.xml
 vendor/lib/libmemtrack-amlogic.so
 
 
-## Recovery - Pinned for convienence
-recovery/root/system/bin/systemcontrol_static|94a0472d834e00313070ca5e2ce8266bca2c93e7
-recovery/root/system/lib/hw/android.hardware.boot@1.0-impl-1.2.droidlogic.so|1940ea8791fd365cfc5cd45cc3d94ce2ac5e79ed
-recovery/root/system/lib/hw/android.hardware.fastboot@1.0-impl-amlogic.so|b23b5ee762944abff5295b070ac9deb81dee62c2
+## Recovery
+recovery/root/system/etc/vintf/manifest/android.hardware.boot-service.droidlogic.xml
+recovery/root/system/etc/vintf/manifest/android.hardware.fastboot-service.amlogic.xml
+recovery/root/system/bin/hw/android.hardware.boot-service_recovery
+recovery/root/system/bin/hw/android.hardware.fastboot-service.amlogic_recovery
+recovery/root/system/etc/init/android.hardware.boot-service.droidlogic_recovery.rc
+recovery/root/system/etc/init/android.hardware.fastboot-service.amlogic_recovery.rc
+recovery/root/system/lib/vendor.amlogic.hardware.systemcontrol@1.0.so
+recovery/root/system/lib/vendor.amlogic.hardware.systemcontrol@1.1.so
+recovery/root/system/lib/libsystemcontrolservice.so
 
 ## remotecfg
 vendor/bin/remotecfg

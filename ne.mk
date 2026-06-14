@@ -278,7 +278,10 @@ PRODUCT_PACKAGES += \
     update_verifier \
     android.hardware.boot@1.1 \
     android.hardware.boot@1.1.vendor \
-    android.hardware.boot-V1-ndk.vendor
+    android.hardware.boot-V1-ndk.vendor \
+    android.hardware.fastboot-V1-ndk.recovery \
+    android.hardware.fastboot@1.0.recovery \
+    android.hardware.fastboot@1.1.recovery
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
