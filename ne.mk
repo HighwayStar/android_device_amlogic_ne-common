@@ -52,6 +52,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     audio_policy_engine_criteria.xml
 
+# Parameter Framework Policy Files
+PRODUCT_PACKAGES += \
+    PolicyClass.xml \
+    PolicySubsystem-CommonTypes.xml \
+    PolicySubsystem.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/parameter-framework/ParameterFrameworkConfigurationPolicy.xml:$(TARGET_COPY_OUT_VENDOR)/etc/parameter-framework/ParameterFrameworkConfigurationPolicy.xml \
+    $(LOCAL_PATH)/audio/parameter-framework/Settings/Policy/PolicyConfigurableDomains.xml:$(TARGET_COPY_OUT_VENDOR)/etc/parameter-framework/Settings/Policy/PolicyConfigurableDomains.xml \
+    $(LOCAL_PATH)/audio/parameter-framework/Structure/Policy/ProductStrategies.xml:$(TARGET_COPY_OUT_VENDOR)/etc/parameter-framework/Structure/Policy/ProductStrategies.xml
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/aml_audio_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/aml_audio_config.json
 
@@ -67,6 +78,7 @@ PRODUCT_PACKAGES += \
     libaudiofoundation.vendor \
     libaudioroute.vendor \
     libaudiopolicyengineconfigurable \
+    libpolicy-subsystem \
     android.media.audio.common.types-V2-cpp.vendor \
     android.hardware.bluetooth.audio-V3-ndk.vendor
 
