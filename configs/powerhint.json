@@ -2,7 +2,7 @@
   "Nodes": [
     {
       "Name": "INTERACTIVE_ACTION",
-      "Path": "/sys/power/early_suspend_trigger",
+      "Path": "/sys/class/meson_pm/early_suspend_trigger",
       "Values": [
         "0",
         "1"
@@ -14,10 +14,10 @@
       "Name": "CPUScalingGovernor",
       "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
       "Values": [
-        "interactive",
+        "schedutil",
         "performance"
       ],
-      "DefaultIndex": 0,
+      "DefaultIndex": 1,
       "ResetOnInit": true
     },
     {

@@ -27,9 +27,33 @@ PRODUCT_COPY_FILES +=  \
 ## Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ddp_dtshd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ddp_dtshd.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ddp_dtsx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ddp_dtsx.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ddp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ddp.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_default.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_default.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_dtshd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_dtshd.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_dtsx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_dtsx.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12_dtshd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12_dtshd.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12_dtsx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12_dtsx.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12v1_dtshd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12v1_dtshd.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12v1_dtsx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12v1_dtsx.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12v1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12v1.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_ms12.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_ms12.xml \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml
+    $(LOCAL_PATH)/audio/audio_policy_engine_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_configuration.xml \
+    $(LOCAL_PATH)/audio/audio_policy_engine_criterion_types.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_criterion_types.xml \
+    $(LOCAL_PATH)/audio/audio_policy_engine_default_stream_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_default_stream_volumes.xml \
+    $(LOCAL_PATH)/audio/audio_policy_engine_product_strategies.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_product_strategies.xml \
+    $(LOCAL_PATH)/audio/audio_policy_engine_stream_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_engine_stream_volumes.xml \
+    $(LOCAL_PATH)/audio/hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/hearing_aid_audio_policy_configuration.xml \
+    $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
+    frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml
 
+PRODUCT_PACKAGES += \
+    audio_policy_engine_criteria.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/aml_audio_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/aml_audio_config.json
 
 # Audio HAL Interfaces and Wrappers (No generic audio.service!)
 PRODUCT_PACKAGES += \
@@ -42,6 +66,7 @@ PRODUCT_PACKAGES += \
     av-types-aidl-cpp.vendor \
     libaudiofoundation.vendor \
     libaudioroute.vendor \
+    libaudiopolicyengineconfigurable \
     android.media.audio.common.types-V2-cpp.vendor \
     android.hardware.bluetooth.audio-V3-ndk.vendor
 
